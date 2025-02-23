@@ -1,0 +1,37 @@
+name: Add issue to Project
+
+on:
+  issues:
+    types:
+      - opened
+
+env:        # Project の所有者名（users, orgs のどちらでも OK）
+  PROJECT_NUMBER: 1          # Project 番号（確認方法は本題参照）
+  GITHUB_TOKEN: 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 # `repo`, `read:org`, `write:org` 権限を付与した Personal Access Token を保存した Secrets のキー
+jobs:
+  #  google formのアサイン設定
+  setAssignees:
+    runs-on: ubuntu-latest
+    steps:
+      # assigneeを追加
+      - name: 'Auto-assign issue'
+        uses: pozil/auto-assign-issue@v1
+        with:
+          assignees: millefeuille-shinzentaishi
+          numOfAssignee: 1
+          allowSelfAssign: true
+  # issue from github の設定(google formはGAS上で設定される)
+  updateIssuefromGithub:
+    name: 「Project」ラベルの付け外しに対応して、Issue を Projects (Beta) に出し入れする
+    runs-on: ubuntu-latest
+    steps:
+    - name: Add Issue to Project
+      id: add-issue-to-project
+      uses: monry/actions-add-issue-to-project@v1
+      with:
+        github-token: ${{ env.GITHUB_TOKEN }}
+        project-owner: "donutsmajirespect"
+        project-id: "PVT_kwDOAu8jEs4AJtpw"
+        issue-id: ${{ github.event.issue.node_id }}
+    - run: |
+        echo '${{ steps.add-issue-to-project.outputs.added-project-item-id }}'

@@ -1,0 +1,17 @@
+name: dependabot-mention
+
+on:
+  pull_request_target:
+    types: [labeled]
+  workflow_dispatch:
+
+jobs:
+  assign:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: javascript reviewer
+        uses: hkusu/review-assign-action@v1.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          reviewers: millefeuille-shinzentaishi

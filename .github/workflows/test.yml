@@ -1,0 +1,19 @@
+name: Dependabot auto-add-assignee
+on: 
+  issue_comment:
+    types: created
+
+jobs:
+  pr_commented:
+    # This job only runs for pull request comments
+    name: PR comment
+    runs-on: ubuntu-latest
+    if: github.event.issue.pull_request && github.event.issue.assignee == null
+    steps:
+      - run: echo ${{ github.event.issue.assignee == null }}
+      - run: gh pr edit $NUMBER --add-assignee $ASSIGNEE
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          ASSIGNEE: ${{ github.actor }}
