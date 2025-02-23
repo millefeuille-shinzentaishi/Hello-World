@@ -107,7 +107,7 @@ gem 'jquery-rails'
 # csv
 gem 'roo'
 
-gem 'faraday-net_http', '2.0.0'
+gem 'faraday-net_http', '3.4.0'
 
 gem "importmap-rails" #ESMとimportmapを使用して、トランスパイルやバンドルなしでRailsのモダンなJavaScriptを管理
 
